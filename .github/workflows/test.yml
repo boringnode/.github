@@ -46,7 +46,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: corepack enable
+      - name: Enable Corepack
+        run: corepack enable --install-directory "$RUNNER_TEMP/corepack-shims"
+        shell: bash
+
+      - name: Add Corepack shims to PATH
+        run: echo "$RUNNER_TEMP/corepack-shims" >> $GITHUB_PATH
+        shell: bash
 
       - uses: actions/setup-node@v4
         with:
